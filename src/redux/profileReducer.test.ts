@@ -1,9 +1,10 @@
+import { AxiosResponse } from 'axios';
 import profileReducer, {setUserIdActionCreater, setLookingForAJobAC, 
     setLookingForAJobDescriptionAC, setFullNameAC, 
-    setContactsAC, setPhotos, IState} from "./profileReducer"
+    setContactsAC, setPhotos, IStateProfile, getDataProfileThunk} from "./profileReducer"
 
 describe("Test for profile Reducer",()=>{
-    let state:IState = {
+    let state:IStateProfile = {
         userId:null,
         lookingForAJob:null,
         lookingForAJobDescription:null,
@@ -23,6 +24,7 @@ describe("Test for profile Reducer",()=>{
             large:null
         }
     }
+
     test( "Action creater for userId",()=>{
         let actionForUserId = setUserIdActionCreater(485)
         let newState = profileReducer(state, actionForUserId)
@@ -62,7 +64,7 @@ describe("Test for profile Reducer",()=>{
     })
     test("Action creater for photos", ()=>{
         let photos = {
-            small:"small",
+            small:"small", 
             large:"large"
         }
         let actionPhotos = setPhotos(photos)
@@ -70,4 +72,21 @@ describe("Test for profile Reducer",()=>{
         expect(newState.photos?.small).toBe("small")
         expect(newState.photos?.large).toBe("large")
     })
+})
+
+describe("Tests for Thunks profileData",()=>{
+    test( "getProfileDataThunk get profile data",async()=>{
+        let userId = 485
+        let response = await getDataProfileThunk(userId)
+        let expectProm:IStateProfile={
+            userId: null,
+            lookingForAJob: null,
+            lookingForAJobDescription: null,
+            fullName: null,
+            contacts: null,
+            photos: null,
+        }    
+        expect(!!response).toBe(true)
+    })
+    
 })

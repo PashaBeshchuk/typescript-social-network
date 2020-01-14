@@ -1,3 +1,5 @@
+import { apiForProfile } from './../api/apiForProfile';
+import { Dispatch } from 'redux';
 interface IPhoto {
     small: string | null;
     large: string | null;
@@ -12,7 +14,7 @@ interface IContacts {
     youtube: string | null;
     mainLink: string | null;
 }
-export interface IState {
+export interface IStateProfile {
     userId: number | null;
     lookingForAJob: boolean | null;
     lookingForAJobDescription: string | null;
@@ -20,7 +22,7 @@ export interface IState {
     contacts: IContacts | null;
     photos: IPhoto | null;
 }
-const initialState: IState = {
+const initialState: IStateProfile = {
     userId: null,
     lookingForAJob: null,
     lookingForAJobDescription: null,
@@ -28,6 +30,7 @@ const initialState: IState = {
     contacts: null,
     photos: null,
 }
+
 const interLiteral = <O, T extends O>(value: T): T => {
     return value
 }
@@ -49,7 +52,9 @@ export const setPhotos = (photos:IPhoto) =>({type: interLiteralFromString("SET_P
 
 
 
-const profileReducer = (state: IState, action: profileActionType) => {
+const profileReducer = (state: IStateProfile = initialState, action: profileActionType) => {
+    
+    
     switch (action.type) {
         case "SET_USER_ID":
             return {
@@ -85,9 +90,12 @@ const profileReducer = (state: IState, action: profileActionType) => {
             return state
     }
 }
-//создать Store
-//подключить Thunk
-//подключить бибилиотеку axios
 
+export const getDataProfileThunk=(userId:number)=>{
+    return async (dispatch:Dispatch) =>{
+        const response = await apiForProfile.getProfileData(userId)
+       console.log(response)
+    }
+}
 
 export default profileReducer

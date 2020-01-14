@@ -5,4 +5,5 @@ const redcers = combineReducers({
     profile:profileReducer
 })
 export type AppStore = ReturnType <typeof redcers>
-const store = createStore(redcers, applyMiddleware(thunk as ThunkMiddleware<AppStore, profileActionType>))
+
+export const store = createStore(redcers, applyMiddleware(thunk as ThunkMiddleware<AppStore, profileActionType>))
