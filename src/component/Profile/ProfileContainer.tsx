@@ -7,7 +7,6 @@ import { ThunkDispatch } from "redux-thunk"
 import Profile from "./Profile"
 
 const ProfileContainer:React.FC<IListTypesProfile> = (props) => {
-    console.log(props.getDataProfileThunk)
     useEffect(()=>{
         props.getDataProfileThunk(4983)
     })
